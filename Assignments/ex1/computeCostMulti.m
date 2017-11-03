@@ -14,7 +14,7 @@ J = 0;
 %               You should set J to the cost.
 
 H = (theta'*X')';
-S = (H - y)' * (H - y); %Power of 2 of each element
+S = sum((H - y) .^ 2); %Power of 2 of each element
 J = S / (2*m);
 
 % =========================================================================
