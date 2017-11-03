@@ -17,12 +17,9 @@ for iter = 1:num_iters
     %       of the cost function (computeCost) and gradient here.
     %
     
-    disp("J =");
-    disp(computeCost(X, y, theta));
-
-
-
-
+    H = (theta'*X')';
+    D = (sum((H - y) .* X )) / m;
+    theta = theta - alpha * D';
 
 
 
