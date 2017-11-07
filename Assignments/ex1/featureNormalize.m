@@ -25,19 +25,10 @@ sigma = zeros(1, size(X, 2));
 %
 % Hint: You might find the 'mean' and 'std' functions useful.
 %       
-[m,n] = size(X);
 sigma = std(X);
 mu = mean(X);
+X_norm = (X_norm-mu) ./ sigma;
 
-
-for i = 1:n
-    %Extract average of column to whole column i
-    X_norm(:,i) = X_norm(:,i) - mu(i);
-    for j = 1:m
-        %Divide feature X(j,i) by std deviantion
-        X_norm(j,i) = X_norm(j,i) / sigma(i);
-    end
-end
 % ============================================================
 
 end
