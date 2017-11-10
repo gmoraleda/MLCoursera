@@ -21,8 +21,7 @@ grad = zeros(size(theta));
 
 %H = X * theta; This is for lineal regression not logistic regression
 z = X*theta;
-H = 1 ./ (1 + exp(-z));
-%J= (-1/m)*((log(H)*y')+(log(1-H)*(1+y)'));
+H = sigmoid(z);
 S = -y'*log(H) - (1-y')*log(1-H);
 J = S/m;
 grad = (X'*(H-y))/m;
