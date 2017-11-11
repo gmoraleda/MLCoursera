@@ -22,7 +22,7 @@ H = sigmoid(z);
 S1 = -y'*log(H) - (1-y')*log(1-H); %Cost function
 S2 = (theta(2:size(theta))'*theta(2:size(theta))); %Regularization keeping out theta(1)
 J = (S1/m) + ((lambda*S2)/(2*m));
-grad = ((X'*(H-y))/m) + ([0;theta(2:size(theta))*lambda/(m-1)]); %Gradient keeping out theta(1)
+grad = ((X'*(H-y))/m) + ([0;theta(2:size(theta))*lambda/(m)]); %Gradient keeping out theta(1)
 
 
 % =============================================================
