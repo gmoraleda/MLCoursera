@@ -62,23 +62,42 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+%---------------Feedforward---------------
+%Expand y as a matrix
+eye_matrix = eye(num_labels);
+y_matrix = eye_matrix(y,:);
+%Add bias column
+a1 = [ones(m, 1) X]; 
+z2 = a1 * Theta1';
+a2 = sigmoid(z2);
+%Add bias column
+a2 = [ones(size(a2,1), 1) a2]; 
+z3 = a2 * Theta2';
+a3 = sigmoid(z3);
+H = a3;
+cost = sum((-y_matrix.*log(H) - (1-y_matrix).*log(1-H)),2);
+J = sum(cost)/m;
 
+%Regularized:
+%Remove first column of Theta1 and Theta2
+tempTheta1 = Theta1;
+tempTheta2 = Theta2;
+tempTheta1(:,1) = [];
+tempTheta2(:,1) = [];
+%Add regularized term to cost(J)
+J = J + (sum(sum(tempTheta1.^2)) + sum(sum(tempTheta2.^2)))*lambda/(2*m);
 
+%---------------Backpropagation---------------
+d3 = a3 - y_matrix;
+d2 = (d3 * Theta2(:,2:end)) .* sigmoidGradient(z2);
+Delta1 = d2' * a1;
+Delta2 = d3' * a2;
+Theta1_grad = Delta1/m;
+Theta2_grad = Delta2/m;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+%Regularized:
+Theta1_grad(:, 2:end) = Theta1_grad(:, 2:end) + (Theta1(:, 2:end)*lambda/m);
+Theta2_grad(:, 2:end) = Theta2_grad(:, 2:end) + (Theta2(:, 2:end)*lambda/m);
 
 % -------------------------------------------------------------
 
@@ -86,6 +105,7 @@ Theta2_grad = zeros(size(Theta2));
 
 % Unroll gradients
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
+
 
 
 end
